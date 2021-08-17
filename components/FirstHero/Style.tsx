@@ -6,9 +6,8 @@ export const FirstHeroWrapper = styled.div`
     width: 100%;
     height: 80rem;
     color: white;
-
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2,1fr) ;
     align-content: center;
     padding: 10rem;
     grid-auto-rows: minmax(10rem, max-content);

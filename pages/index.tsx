@@ -1,11 +1,17 @@
-import type { NextPage, GetStaticProps } from 'next'
-import { Helmet } from "react-helmet";
+import type { NextPage, GetStaticProps, } from 'next'
+import { CSSProperties } from "react";
+import Img from "next/image";
 import Head from "next/head";
-import axios from "axios";
 import styled from "styled-components";
-
+import axios from "axios";
+// images
+import sunShape from "../images/assets/sun_shape.png";
+import moonGradient from "../images/assets/moon_gradient.png";
+import moonClay from "../images/assets/moon_clay.png";
+sunShape.height
 // components
 import FirstHero from "../components/FirstHero/FirstHero";
+import { useState } from 'react';
 
 
 
@@ -24,7 +30,15 @@ interface Context {
 }
 
 const Home: NextPage<Context> = ({ }) => {
-
+  const allImages: StaticImageData[] = [sunShape, moonGradient, moonClay]
+  const [imageIndex, setImageIndex] = useState<number>(0)
+  const size = 40;
+  const styleImage: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
   return (
     <Wrapper >
 
@@ -36,15 +50,24 @@ const Home: NextPage<Context> = ({ }) => {
       <MainWrapper>
         <FirstHero
           leftContent={
-            <Wrapper>
+            <div>
               <HeaderOne>Making it happen</HeaderOne>
               <PhraseOne>By doing less. Don&apos;t overdo things</PhraseOne>
-            </Wrapper>
+            </div>
           }
           rightContent={
-            <Wrapper>
-
-            </Wrapper>
+            <div style={styleImage}>
+              <Img
+                src={allImages[imageIndex]}
+                width={allImages[imageIndex].width * (size / 100) + 'px'}
+                height={allImages[imageIndex].height * (size / 100) + 'px'}
+                onClick={() => {
+                  if (imageIndex === allImages.length - 1)
+                    return setImageIndex(0);
+                  setImageIndex(imageIndex + 1)
+                }}
+              />
+            </div>
           }
         />
       </MainWrapper>
@@ -62,6 +85,10 @@ const Home: NextPage<Context> = ({ }) => {
 
 
 const Wrapper = styled.div`
+
+
+  
+
 
 `;
 
@@ -94,6 +121,7 @@ const PhraseOne = styled.p`
   font-size: 2rem;
 
 `;
+
 
 
 export default Home
